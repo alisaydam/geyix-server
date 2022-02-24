@@ -6,14 +6,6 @@ import User from "./models/User.js";
 import path from "path";
 import cors from "cors";
 
-import routes from "./routes/index.js";
-dotenv.config();
-const app = express();
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
-app.set("view engine", "ejs");
 
 mongoose
   .connect(process.env.MONGO_URI)
@@ -23,6 +15,16 @@ mongoose
   .catch((err) => {
     console.log("Could not connect to DB");
   });
+
+import routes from "./routes/index.js";
+dotenv.config();
+const app = express();
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.set("view engine", "ejs");
+
 
 app.use("/", routes);
 
