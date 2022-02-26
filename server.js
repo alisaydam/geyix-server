@@ -2,10 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
-import User from "./models/User.js";
-import path from "path";
 import cors from "cors";
-
+dotenv.config();
 
 mongoose
   .connect(process.env.MONGO_URI)
@@ -13,6 +11,7 @@ mongoose
     console.log("Db connected");
   })
   .catch((err) => {
+    console.log(err);
     console.log("Could not connect to DB");
   });
 

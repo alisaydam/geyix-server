@@ -1,43 +1,42 @@
 import mongoose from "mongoose";
 import bycypt from "bcrypt";
 
-const UserSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  about: {
-    type: String,
-  },
-  avatar: {
-    type: String,
-  },
-  role: {
-    type: String,
-    enum: ["user", "admin", "god"],
-    default: "user",
-  },
-  memes: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Meme",
+const UserSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+      unique: true,
     },
-  ],
-  createdAt: {
-    type: Date,
-    default: Date.now,
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    about: {
+      type: String,
+    },
+    avatar: {
+      type: String,
+    },
+    role: {
+      type: String,
+      enum: ["user", "admin", "god"],
+      default: "user",
+    },
+    memes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Meme",
+      },
+    ],
   },
-});
+  { timestamps: true }
+);
 
 UserSchema.pre("save", function (next) {
   const user = this;

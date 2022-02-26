@@ -29,3 +29,14 @@ export const getMemes = async (req, res) => {
     console.log(error);
   }
 };
+
+export const getOneById = async (req, res) => {
+  const id = req.params.id;
+  let meme;
+  try {
+    meme = await Meme.findById(id);
+    res.status(201).send(meme);
+  } catch (error) {
+    console.log(error);
+  }
+};
