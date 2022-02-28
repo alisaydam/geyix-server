@@ -26,7 +26,9 @@ export const login = async (req, res) => {
       res.send({
         success: true,
         user: {
-          id: user.id,
+          _id: user.id,
+          avatar: user.avatar,
+          username: user.username,
         },
       });
     } else {

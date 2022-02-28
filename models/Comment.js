@@ -1,6 +1,6 @@
-import { mongoose, Schema } from "mongoose";
+import mongoose from "mongoose";
 
-const CommentSchema = new Schema(
+const CommentSchema = new mongoose.Schema(
   {
     comment: {
       type: String,
@@ -9,10 +9,12 @@ const CommentSchema = new Schema(
     meme: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Meme",
+      required: true,
     },
     commentor: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required: true,
     },
     subComments: [
       {
@@ -24,3 +26,6 @@ const CommentSchema = new Schema(
   },
   { timestamps: true }
 );
+
+const Comment = mongoose.model("Comment", CommentSchema);
+export default Comment;
