@@ -1,10 +1,13 @@
 import Comment from "../models/Comment.js";
 import Meme from "../models/Meme.js";
+import User from "../models/User.js";
 
 export const like = async (req, res, next) => {
   const { memeid, username } = req.params;
   let meme;
   try {
+    let user = await User.findOne({ username: username });
+    if (!username || !user) return;
     meme = await Meme.findById(memeid);
     if (meme.likes.includes(username) || meme.dislikes.includes(username)) {
       let likes;
@@ -31,6 +34,8 @@ export const dislike = async (req, res) => {
   const { memeid, username } = req.params;
   let meme;
   try {
+    let user = await User.findOne({ username: username });
+    if (!username || !user) return;
     meme = await Meme.findById(memeid);
     if (meme.likes.includes(username) || meme.dislikes.includes(username)) {
       let likes;
