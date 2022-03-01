@@ -2,7 +2,6 @@ import Meme from "../models/Meme.js";
 import User from "../models/User.js";
 
 export const newMeme = async (req, res) => {
-  console.log(req);
   console.log(req.body);
   const { id, title, meme } = req.body;
   try {

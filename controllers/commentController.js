@@ -4,7 +4,7 @@ import User from "../models/User.js";
 
 export const newComment = async (req, res) => {
   const { userid, memeid, comment } = req.body;
-  console.log(comment);
+  console.log(req.body);
   let user, meme;
   try {
     user = await User.findById(userid);
