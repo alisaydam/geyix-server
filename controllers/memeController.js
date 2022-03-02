@@ -1,5 +1,6 @@
 import Meme from "../models/Meme.js";
 import User from "../models/User.js";
+import Comment from "../models/Comment.js";
 
 export const newMeme = async (req, res) => {
   console.log(req.body);
@@ -35,10 +36,13 @@ export const getMemes = async (req, res) => {
 
 export const getOneById = async (req, res) => {
   const id = req.params.id;
-  let meme;
+
   try {
-    meme = await Meme.findById(id);
-    res.status(201).send(meme);
+    let meme = await Meme.findById(id);
+    let comments = await Comment.find({
+      meme: meme,
+    }).sort("-createdAt");
+    res.status(201).json({ meme, comments });
   } catch (error) {
     console.log(error);
   }

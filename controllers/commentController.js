@@ -12,12 +12,13 @@ export const newComment = async (req, res) => {
 
     const newComment = new Comment();
     newComment.comment = comment;
-    newComment.commentor = user;
+    newComment.commentor.username = user.username;
+    newComment.commentor.avatar = user.avatar;
     newComment.meme = meme;
 
     await Comment.create(newComment);
 
-    res.status(201).json({ success: true, comment });
+    res.status(201).json(newComment);
   } catch (error) {
     console.log(error);
   }

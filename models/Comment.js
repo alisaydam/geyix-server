@@ -12,9 +12,8 @@ const CommentSchema = new mongoose.Schema(
       required: true,
     },
     commentor: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
+      username: String,
+      avatar: String,
     },
     subComments: [
       {
