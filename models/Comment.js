@@ -20,9 +20,14 @@ const CommentSchema = new mongoose.Schema(
         commentor: String,
         comment: String,
         avatar: String,
+        likes: [],
+        dislikes: [],
       },
     ],
+    likes: [],
+    dislikes: [],
   },
+
   { timestamps: true }
 );
 
