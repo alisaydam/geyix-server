@@ -15,15 +15,17 @@ const CommentSchema = new mongoose.Schema(
       username: String,
       avatar: String,
     },
-    subComments: [
-      {
-        commentor: String,
-        comment: String,
-        avatar: String,
-        likes: [],
-        dislikes: [],
-      },
-    ],
+    subComments: {
+      subComments: [
+        {
+          commentor: String,
+          subComment: String,
+          avatar: String,
+        },
+      ],
+      likes: [],
+      dislikes: [],
+    },
     likes: [],
     dislikes: [],
   },

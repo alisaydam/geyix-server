@@ -23,3 +23,21 @@ export const newComment = async (req, res) => {
     console.log(error);
   }
 };
+
+export const newSubComment = async (req, res) => {
+  const { username, avatar, subComment, commentid } = req.body;
+  const newSubComment = {
+    commentor: username,
+    subComment: subComment,
+    avatar: avatar,
+  };
+
+  let comment;
+  try {
+    comment = await Comment.findById(commentid);
+    comment.subComments.subComments.push(newSubComment);
+    comment.save();
+  } catch (error) {
+    console.log(error);
+  }
+};
