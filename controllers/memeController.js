@@ -3,7 +3,6 @@ import User from "../models/User.js";
 import Comment from "../models/Comment.js";
 
 export const newMeme = async (req, res) => {
-  console.log(req.body);
   const { id, title, meme } = req.body;
   try {
     const user = await User.findById(id);

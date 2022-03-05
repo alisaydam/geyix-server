@@ -4,7 +4,6 @@ import User from "../models/User.js";
 
 export const newComment = async (req, res) => {
   const { userid, memeid, comment } = req.body;
-  console.log(req.body);
   let user, meme;
   try {
     user = await User.findById(userid);
@@ -37,6 +36,7 @@ export const newSubComment = async (req, res) => {
     comment = await Comment.findById(commentid);
     comment.subComments.subComments.push(newSubComment);
     comment.save();
+    res.status(201).send(comment);
   } catch (error) {
     console.log(error);
   }

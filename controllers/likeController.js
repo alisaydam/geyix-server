@@ -59,7 +59,6 @@ export const dislikeMeme = async (req, res) => {
 };
 
 export const likeComment = async (req, res) => {
-  console.log(req.params);
   const { commentid, username } = req.params;
   let comment;
   try {
@@ -84,7 +83,6 @@ export const likeComment = async (req, res) => {
       comment.likes = [username, ...comment.likes];
     }
     await Comment.create(comment);
-    console.log(comment);
     res.status(201).send(comment);
   } catch (error) {
     console.log(error);
@@ -116,7 +114,6 @@ export const dislikeComment = async (req, res) => {
       comment.dislikes = [username, ...comment.dislikes];
     }
     await Comment.create(comment);
-    console.log(comment);
 
     res.status(201).send(comment);
   } catch (error) {
