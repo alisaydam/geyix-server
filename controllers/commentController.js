@@ -24,7 +24,7 @@ export const newComment = async (req, res) => {
 };
 
 export const newSubComment = async (req, res) => {
-  const { username, avatar, subComment, commentid } = req.body;
+  const { username, avatar, subComment, commentId } = req.body;
   const newSubComment = {
     commentor: username,
     subComment: subComment,
@@ -33,8 +33,25 @@ export const newSubComment = async (req, res) => {
 
   let comment;
   try {
-    comment = await Comment.findById(commentid);
+    comment = await Comment.findById(commentId);
     comment.subComments.subComments.push(newSubComment);
+    comment.save();
+    res.status(201).send(comment);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const newSubReply = async (req, res) => {
+  const { commentor, avatar, subComment, commentId, subReplytId, replyTo } =
+    req.body;
+  const newSubComment = { commentor, avatar, subComment, replyTo };
+  try {
+    let comment = await Comment.findById(commentId);
+    const index = comment.subComments.subComments.findIndex(
+      (x) => x._id == subReplytId
+    );
+    comment.subComments.subComments.splice(index, 0, newSubComment);
     comment.save();
     res.status(201).send(comment);
   } catch (error) {

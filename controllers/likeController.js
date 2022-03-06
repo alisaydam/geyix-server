@@ -120,3 +120,62 @@ export const dislikeComment = async (req, res) => {
     console.log(error);
   }
 };
+
+export const likeSubComment = async (req, res) => {
+  const { username, commentid, subCommentid } = req.params;
+
+  try {
+    let comment = await Comment.findById(commentid);
+    const subComment = comment.subComments.subComments.find(
+      (sub) => sub._id == subCommentid
+    );
+    if (subComment.dislikes.includes(username)) {
+      subComment.dislikes.splice(subComment.dislikes.indexOf(username), 1);
+    }
+    if (subComment.likes.includes(username)) {
+      console.log("delete it");
+      subComment.likes.splice(subComment.likes.indexOf(username), 1);
+    } else {
+      subComment.likes.push(username);
+    }
+    console.log(subComment);
+    comment.subComment = subComment;
+    comment.save().catch((e) => {
+      console.log(e);
+    });
+    res
+      .status(201)
+      .json({ likes: subComment.likes, dislikes: subComment.dislikes });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const dislikeSubComment = async (req, res) => {
+  const { username, commentid, subCommentid } = req.params;
+
+  try {
+    let comment = await Comment.findById(commentid);
+    const subComment = comment.subComments.subComments.find(
+      (sub) => sub._id == subCommentid
+    );
+    if (subComment.likes.includes(username)) {
+      subComment.likes.splice(subComment.likes.indexOf(username), 1);
+    }
+    if (subComment.dislikes.includes(username)) {
+      console.log("delete it");
+      subComment.dislikes.splice(subComment.dislikes.indexOf(username), 1);
+    } else {
+      subComment.dislikes.push(username);
+    }
+    comment.subComment = subComment;
+    comment.save().catch((e) => {
+      console.log(e);
+    });
+    res
+      .status(201)
+      .json({ likes: subComment.likes, dislikes: subComment.dislikes });
+  } catch (error) {
+    console.log(error);
+  }
+};
