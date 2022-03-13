@@ -9,7 +9,6 @@ const CommentSchema = new mongoose.Schema(
     meme: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Meme",
-      required: true,
     },
     commentor: {
       username: String,

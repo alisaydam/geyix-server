@@ -133,12 +133,10 @@ export const likeSubComment = async (req, res) => {
       subComment.dislikes.splice(subComment.dislikes.indexOf(username), 1);
     }
     if (subComment.likes.includes(username)) {
-      console.log("delete it");
       subComment.likes.splice(subComment.likes.indexOf(username), 1);
     } else {
       subComment.likes.push(username);
     }
-    console.log(subComment);
     comment.subComment = subComment;
     comment.save().catch((e) => {
       console.log(e);
@@ -163,7 +161,6 @@ export const dislikeSubComment = async (req, res) => {
       subComment.likes.splice(subComment.likes.indexOf(username), 1);
     }
     if (subComment.dislikes.includes(username)) {
-      console.log("delete it");
       subComment.dislikes.splice(subComment.dislikes.indexOf(username), 1);
     } else {
       subComment.dislikes.push(username);

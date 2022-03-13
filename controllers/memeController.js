@@ -46,3 +46,36 @@ export const getOneById = async (req, res) => {
     console.log(error);
   }
 };
+
+export const getUserMemes = async (req, res) => {
+  const { username, section, page, limit } = req.query;
+  console.log(req.query);
+  const startIndex = page * limit;
+  let posts;
+  if (section === "posts") {
+    try {
+      const user = await User.findOne({ username: username });
+      posts = await Meme.find({ user: user })
+        .sort("-createdAt")
+        .limit(limit)
+        .skip(startIndex)
+        .exec();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  if (section === "liked") {
+    try {
+      posts = await Meme.find({
+        likes: { $in: [username] },
+      })
+        .sort("-createdAt")
+        .limit(limit)
+        .skip(startIndex)
+        .exec();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  res.send(posts);
+};

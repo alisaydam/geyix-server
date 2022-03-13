@@ -16,8 +16,11 @@ export const newComment = async (req, res) => {
     newComment.meme = meme;
 
     await Comment.create(newComment);
+    let comments = await Comment.find({
+      meme: meme,
+    }).sort("-createdAt");
 
-    res.status(201).json(newComment);
+    res.status(201).send(comments);
   } catch (error) {
     console.log(error);
   }
@@ -35,7 +38,7 @@ export const newSubComment = async (req, res) => {
   try {
     comment = await Comment.findById(commentId);
     comment.subComments.subComments.push(newSubComment);
-    comment.save();
+    await comment.save();
     res.status(201).send(comment);
   } catch (error) {
     console.log(error);

@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import Meme from "../models/Meme.js";
 import bycypt from "bcrypt";
 
 export const newUser = async (req, res) => {
@@ -15,7 +16,6 @@ export const newUser = async (req, res) => {
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
-  console.log(password);
   try {
     const user = await User.findOne({ email: email });
     const match = await bycypt.compare(password, user.password);
@@ -37,4 +37,13 @@ export const login = async (req, res) => {
   }
 };
 
- 
+export const getUser = async (req, res) => {
+  const { username } = req.params;
+  try {
+    const user = await User.findOne({ username: username });
+
+    res.send(user);
+  } catch (error) {
+    console.log(error);
+  }
+};

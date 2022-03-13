@@ -3,6 +3,10 @@ import bycypt from "bcrypt";
 
 const UserSchema = new mongoose.Schema(
   {
+    name: {
+      type: String,
+      required: true,
+    },
     username: {
       type: String,
       required: true,
