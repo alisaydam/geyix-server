@@ -1,5 +1,10 @@
 import { Router } from "express";
-import { newUser, login, getUser } from "../controllers/userController.js";
+import {
+  newUserEmailSend,
+  login,
+  getUser,
+  createNewUser,
+} from "../controllers/userController.js";
 import {
   registerValidation,
   checkErrorsForRegister,
@@ -7,7 +12,13 @@ import {
 
 const router = Router();
 
-router.post("/newuser", registerValidation, checkErrorsForRegister, newUser);
+router.post(
+  "/newuser",
+  registerValidation,
+  checkErrorsForRegister,
+  newUserEmailSend
+);
+router.get("/createUser/:userJWT", createNewUser);
 router.post("/login", login);
 router.get("/:username", getUser);
 

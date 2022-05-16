@@ -11,6 +11,6 @@ const router = Router();
 router.post("/newMeme", newMeme);
 router.get("/getUserMemes", getUserMemes);
 router.get("/getMemes", getMemes);
-router.get("/:id", getOneById);
+router.get("/getOneById/:id", getOneById);
 
 export default router;

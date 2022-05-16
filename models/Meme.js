@@ -10,6 +10,11 @@ const MemeSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    category: {
+      type: String,
+      enum: ["komig", "politik", "ver mehteri"],
+      default: "komig",
+    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

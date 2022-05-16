@@ -6,7 +6,6 @@ export const newMeme = async (req, res) => {
   const { id, title, meme } = req.body;
   try {
     const user = await User.findById(id);
-    console.log(user);
     const newMeme = await Meme.create({ title, meme, user: user });
     res
       .status(201)
@@ -34,8 +33,9 @@ export const getMemes = async (req, res) => {
 };
 
 export const getOneById = async (req, res) => {
+  console.log(req.params);
   const id = req.params.id;
-
+  console.log(req.params);
   try {
     let meme = await Meme.findById(id);
     let comments = await Comment.find({

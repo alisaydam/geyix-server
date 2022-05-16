@@ -4,6 +4,9 @@ import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 dotenv.config();
+import nodemailer from "nodemailer";
+
+
 
 mongoose
   .connect(process.env.MONGO_URI)

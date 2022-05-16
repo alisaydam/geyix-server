@@ -2,7 +2,8 @@ import Comment from "../models/Comment.js";
 import Meme from "../models/Meme.js";
 import User from "../models/User.js";
 
-export const likeMeme = async (req, res, next) => {
+export const likeMeme = async (req, res) => {
+  console.log(req.headers);
   const { memeid, username } = req.params;
   let meme;
   try {
