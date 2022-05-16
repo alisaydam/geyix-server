@@ -8,6 +8,7 @@ import nodemailer from "nodemailer";
 
 
 
+
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
@@ -18,10 +19,14 @@ mongoose
     console.log("Could not connect to DB");
   });
 
+const corsOption = {
+  origin: ["http://geyix.org"],
+};
+app.use(cors(corsOption));
+
 import routes from "./routes/index.js";
 dotenv.config();
 const app = express();
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
