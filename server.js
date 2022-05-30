@@ -19,14 +19,12 @@ mongoose
     console.log("Could not connect to DB");
   });
 
-const corsOption = {
-  origin: ["http://geyix.org"],
-};
+ 
 
 import routes from "./routes/index.js";
 dotenv.config();
 const app = express();
-app.use(cors(corsOption));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
