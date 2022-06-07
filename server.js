@@ -3,10 +3,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-dotenv.config();
-import nodemailer from "nodemailer";
-
-
+dotenv.config(); 
 
 
 mongoose

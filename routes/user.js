@@ -4,6 +4,7 @@ import {
   login,
   getUser,
   createNewUser,
+  forgotPassword,
 } from "../controllers/userController.js";
 import {
   registerValidation,
@@ -20,6 +21,6 @@ router.post(
 );
 router.get("/createUser/:userJWT", createNewUser);
 router.post("/login", login);
-router.get("/:username", getUser);
-
+router.get("/getOne/:username", getUser);
+router.get("/forgotPass/:email", forgotPassword); 
 export default router;
