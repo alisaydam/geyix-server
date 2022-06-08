@@ -3,7 +3,9 @@ import bycypt from "bcrypt";
 import nodemailer from "nodemailer";
 import jwt from "jsonwebtoken";
 
+
 export const newUserEmailSend = async (req, res) => {
+  console.log(req.body);
   const transporter = nodemailer.createTransport({
     service: "Outlook365",
     auth: {
@@ -14,7 +16,7 @@ export const newUserEmailSend = async (req, res) => {
   const payload = jwt.sign(req.body, process.env.ACCESS_TOKEN_SECRET, {
     expiresIn: "24h",
   });
-  const newUserHref = `<a href="http://localhost:3000/validateUser/${payload}">Üyeliği onaylamak için tıklayınız<a/>`;
+  const newUserHref = `<a href="https://geyix.herokuapp.com/validateUser/${payload}">Üyeliği onaylamak için tıklayınız<a/>`;
 
   const options = {
     from: "geyix@outlook.com",
@@ -109,7 +111,7 @@ export const forgotPassword = async (req, res) => {
     }
   );
   console.log(payload);
-  const forgotPassHref = `<a href="http://localhost:3000/forgotPass/${payload}">Üyeliği onaylamak içiwwwn tıklayınız<a/>`;
+  const forgotPassHref = `<a href="https://geyix.herokuapp.com/forgotPass/${payload}">Üyeliği onaylamak içiwwwn tıklayınız<a/>`;
   const options = {
     from: process.env.OUTLOOK_EMAIL,
     to: req.params.email,
