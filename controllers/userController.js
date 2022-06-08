@@ -5,7 +5,6 @@ import jwt from "jsonwebtoken";
 
 
 export const newUserEmailSend = async (req, res) => {
-  console.log(req.body);
   const transporter = nodemailer.createTransport({
     service: "Outlook365",
     auth: {
@@ -26,36 +25,18 @@ export const newUserEmailSend = async (req, res) => {
   };
   try {
     const info = await transporter.sendMail(options);
-    console.log(info);
     res.status(201).json({
       success: true,
       message:
         "Kayıt başarılı, aktive etmek için mailinize gelen linki tıklayınız",
     });
   } catch (error) {
+    console.log(error);
     res
       .status(201)
       .json({ success: false, message: "User can not be created" });
   }
 };
-
-export const createNewUser = async (req, res) => {
-  const { name, username, email, password } = jwt.verify(
-    req.params.userJWT,
-    process.env.ACCESS_TOKEN_SECRET
-  );
-  try {
-    await User.create({ name, username, email, password });
-    res.status(201).json({
-      user: name,
-      success: true,
-      message: `Tebribler ${name}! Üyeliğniz aktive edilmiştir, lütfen giriş yapınız`,
-    });
-  } catch (error) {
-    res.status(400).json({ error: error, message: "User can not be created" });
-  }
-};
-
 export const login = async (req, res) => {
   console.log(req.body);
   const { email, password } = req.body;
@@ -79,6 +60,25 @@ export const login = async (req, res) => {
     res.status(401).send({ success: false, error: "Yanlış şifre yada email" });
   }
 };
+
+export const createNewUser = async (req, res) => {
+  const { name, username, email, password } = jwt.verify(
+    req.params.userJWT,
+    process.env.ACCESS_TOKEN_SECRET
+  );
+  try {
+    await User.create({ name, username, email, password });
+    res.status(201).json({
+      user: name,
+      success: true,
+      message: `Tebribler ${name}! Üyeliğniz aktive edilmiştir, lütfen giriş yapınız`,
+    });
+  } catch (error) {
+    res.status(400).json({ error: error, message: "User can not be created" });
+  }
+};
+
+
 
 export const getUser = async (req, res) => {
   console.log(req.params);

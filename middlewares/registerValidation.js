@@ -27,8 +27,6 @@ export const registerValidation = [
 ];
 
 export const checkErrorsForRegister = async (req, res, next) => {
-  console.log(req.body);
-
   const errors = validationResult(req)
     .array()
     .map((error) => error.msg);
