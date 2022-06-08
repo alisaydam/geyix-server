@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
-import cors from "cors";
+const cors = require("cors");
 import routes from "./routes/index.js";
 dotenv.config();
 
