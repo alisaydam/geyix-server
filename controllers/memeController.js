@@ -33,9 +33,7 @@ export const getMemes = async (req, res) => {
 };
 
 export const getOneById = async (req, res) => {
-  console.log(req.params);
   const id = req.params.id;
-  console.log(req.params);
   try {
     let meme = await Meme.findById(id);
     let comments = await Comment.find({
@@ -48,8 +46,8 @@ export const getOneById = async (req, res) => {
 };
 
 export const getUserMemes = async (req, res) => {
+  console.log("geliy");
   const { username, section, page, limit } = req.query;
-  console.log(req.query);
   const startIndex = page * limit;
   let posts;
   if (section === "posts") {
@@ -76,6 +74,9 @@ export const getUserMemes = async (req, res) => {
     } catch (error) {
       console.log(error);
     }
+  }
+  if (section === "commented") {
+    ("dwawd");
   }
   res.send(posts);
 };
