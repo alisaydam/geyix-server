@@ -46,7 +46,6 @@ export const getOneById = async (req, res) => {
 };
 
 export const getUserMemes = async (req, res) => {
-  console.log("geliy");
   const { username, section, page, limit } = req.query;
   const startIndex = page * limit;
   let posts;

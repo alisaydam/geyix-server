@@ -3,8 +3,9 @@ import {
   newUserEmailSend,
   login,
   getUser,
+  resetPassword,
   createNewUser,
-  forgotPassword,
+  forgotPasswordEmailSend,
 } from "../controllers/userController.js";
 import {
   registerValidation,
@@ -22,5 +23,6 @@ router.post(
 router.get("/createUser/:userJWT", createNewUser);
 router.post("/login", login);
 router.get("/getOne/:username", getUser);
-router.get("/forgotPass/:email", forgotPassword); 
+router.get("/forgotPass/:email", forgotPasswordEmailSend);
+router.post("/resetPassword", resetPassword); 
 export default router;
