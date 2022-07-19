@@ -1,6 +1,7 @@
 import Meme from "../models/Meme.js";
 import User from "../models/User.js";
 import Comment from "../models/Comment.js";
+import { newSubComment } from "./commentController.js";
 
 export const newMeme = async (req, res) => {
   const { id, title, meme } = req.body;
@@ -18,13 +19,13 @@ export const newMeme = async (req, res) => {
 export const getMemes = async (req, res) => {
   const { page, limit } = req.query;
   const startIndex = page * limit;
-  let results;
+
   try {
-    results = await Meme.find()
+    let results = await Meme.find()
       .sort("-createdAt")
       .limit(limit)
       .skip(startIndex)
-      .exec();
+      .populate("comments");
 
     res.send(results);
   } catch (error) {
@@ -38,7 +39,13 @@ export const getOneById = async (req, res) => {
     let meme = await Meme.findById(id);
     let comments = await Comment.find({
       meme: meme,
-    }).sort("-createdAt");
+    })
+      .sort("-createdAt")
+      .populate("user", "username avatar")
+      .populate({
+        path: "subComments",
+        populate: { path: "user", select: "username avatar" },
+      });
     res.status(201).json({ meme, comments });
   } catch (error) {
     console.log(error);

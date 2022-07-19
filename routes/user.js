@@ -5,6 +5,7 @@ import {
   getUser,
   resetPassword,
   createNewUser,
+  updateAvatar,
   forgotPasswordEmailSend,
 } from "../controllers/userController.js";
 import {
@@ -24,5 +25,6 @@ router.get("/createUser/:userJWT", createNewUser);
 router.post("/login", login);
 router.get("/getOne/:username", getUser);
 router.get("/forgotPass/:email", forgotPasswordEmailSend);
-router.post("/resetPassword", resetPassword); 
+router.post("/resetPassword", resetPassword);
+router.post("/update-avatar", updateAvatar); 
 export default router;

@@ -10,22 +10,29 @@ const CommentSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Meme",
     },
-    commentor: {
-      username: String,
-      avatar: String,
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
-    subComments: {
-      subComments: [
-        {
-          commentor: String,
-          subComment: String,
-          avatar: String,
-          replyTo: String,
-          likes: [],
-          dislikes: [],
+    subComments: [
+      {
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
         },
-      ],
-    },
+        subComment: String,
+        replyTo: {
+          type: String,
+          default: "",
+        },
+        image: {
+          type: String,
+          default: "",
+        },
+        likes: [],
+        dislikes: [],
+      },
+    ],
     likes: [],
     dislikes: [],
   },

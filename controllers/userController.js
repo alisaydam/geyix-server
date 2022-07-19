@@ -84,7 +84,9 @@ export const createNewUser = async (req, res) => {
 export const getUser = async (req, res) => {
   const { username } = req.params;
   try {
-    const user = await User.findOne({ username: username });
+    let user = await User.findOne({ username: username });
+
+    user = { name: user.name, username: user.username, avatar: user.avatar };
 
     res.send(user);
   } catch (error) {
@@ -141,5 +143,22 @@ export const resetPassword = async (req, res) => {
       success: false,
       message: "Yanlış ya da kullanılmış geçmiş istek.",
     });
+  }
+};
+
+export const updateAvatar = async (req, res) => {
+  const { id, url } = req.body;
+  console.log(req.body);
+  try {
+    await User.updateOne({ _id: id }, { $set: { avatar: url } });
+    const user = await User.findById(id);
+    res.status(201).json({
+      name: user.name,
+      avatar: user.avatar,
+      username: user.username,
+      _id: user._id,
+    });
+  } catch (error) {
+    console.log(error);
   }
 };

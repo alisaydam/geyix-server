@@ -12,7 +12,7 @@ const MemeSchema = new mongoose.Schema(
     },
     category: {
       type: String,
-      enum: ["Komik", "Bilim", "Oha", "Bu Nedir", "Adam Çalışıyor"],
+      enum: ["Komik", "komig", "Bilim", "Oha", "Bu Nedir", "Adam Çalışıyor"],
       default: "Komik",
     },
     user: {

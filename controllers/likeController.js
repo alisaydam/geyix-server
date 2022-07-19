@@ -126,7 +126,7 @@ export const likeSubComment = async (req, res) => {
 
   try {
     let comment = await Comment.findById(commentid);
-    const subComment = comment.subComments.subComments.find(
+    const subComment = comment.subComments.find(
       (sub) => sub._id == subCommentid
     );
     if (subComment.dislikes.includes(username)) {
@@ -154,7 +154,7 @@ export const dislikeSubComment = async (req, res) => {
 
   try {
     let comment = await Comment.findById(commentid);
-    const subComment = comment.subComments.subComments.find(
+    const subComment = comment.subComments.find(
       (sub) => sub._id == subCommentid
     );
     if (subComment.likes.includes(username)) {

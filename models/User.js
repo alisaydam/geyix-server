@@ -33,6 +33,12 @@ const UserSchema = new mongoose.Schema(
       enum: ["user", "admin", "god"],
       default: "user",
     },
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment",
+      },
+    ],
     memes: [
       {
         type: mongoose.Schema.Types.ObjectId,

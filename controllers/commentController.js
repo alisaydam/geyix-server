@@ -11,14 +11,15 @@ export const newComment = async (req, res) => {
 
     const newComment = new Comment();
     newComment.comment = comment;
-    newComment.commentor.username = user.username;
-    newComment.commentor.avatar = user.avatar;
     newComment.meme = meme;
+    newComment.user = user;
 
     await Comment.create(newComment);
     let comments = await Comment.find({
       meme: meme,
-    }).sort("-createdAt");
+    })
+      .sort("-createdAt")
+      .populate("user", "username avatar");
 
     res.status(201).send(comments);
   } catch (error) {
@@ -27,17 +28,22 @@ export const newComment = async (req, res) => {
 };
 
 export const newSubComment = async (req, res) => {
-  const { username, avatar, subComment, commentId } = req.body;
-  const newSubComment = {
-    commentor: username,
-    subComment: subComment,
-    avatar: avatar,
-  };
-
-  let comment;
   try {
-    comment = await Comment.findById(commentId);
-    comment.subComments.subComments.push(newSubComment);
+    const user = await User.findOne({ username: req.body.username });
+    const { image, subComment, commentId } = req.body;
+    const newSubComment = {
+      user: user,
+      subComment: subComment,
+      image: image,
+    };
+
+    const comment = await Comment.findById(commentId)
+      .populate("user", "username avatar")
+      .populate({
+        path: "subComments",
+        populate: { path: "user", select: "username avatar" },
+      });
+    comment.subComments.push(newSubComment);
     await comment.save();
     res.status(201).send(comment);
   } catch (error) {
@@ -46,15 +52,23 @@ export const newSubComment = async (req, res) => {
 };
 
 export const newSubReply = async (req, res) => {
-  const { commentor, avatar, subComment, commentId, subReplytId, replyTo } =
-    req.body;
-  const newSubComment = { commentor, avatar, subComment, replyTo };
+  const { subComment, commentId, subReplytId, replyTo, id } = req.body;
   try {
-    let comment = await Comment.findById(commentId);
-    const index = comment.subComments.subComments.findIndex(
-      (x) => x._id == subReplytId
-    );
-    comment.subComments.subComments.splice(index, 0, newSubComment);
+    const user = await User.findById(id);
+    const newSubComment = {
+      user: user,
+      subComment,
+      replyTo,
+      image: "",
+    };
+    let comment = await Comment.findById(commentId)
+      .populate("user", "username avatar")
+      .populate({
+        path: "subComments",
+        populate: { path: "user", select: "username avatar" },
+      });
+    const index = comment.subComments.findIndex((x) => x._id == subReplytId);
+    comment.subComments.splice(index, 0, newSubComment);
     comment.save();
     res.status(201).send(comment);
   } catch (error) {
