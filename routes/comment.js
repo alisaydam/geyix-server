@@ -4,11 +4,12 @@ import {
   newSubComment,
   newSubReply,
 } from "../controllers/commentController.js";
+import { checkJWT } from "../middlewares/checkJWT.js";
 
 const router = Router();
 
-router.post("/newcomment", newComment);
-router.post("/newSubComment", newSubComment);
-router.post("/newSubReply", newSubReply);
+router.post("/newcomment", checkJWT, newComment);
+router.post("/newSubComment", checkJWT, newSubComment);
+router.post("/newSubReply", checkJWT, newSubReply);
 
 export default router;

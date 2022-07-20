@@ -35,6 +35,7 @@ export const getMemes = async (req, res) => {
 
 export const getOneById = async (req, res) => {
   const id = req.params.id;
+  console.log(id);
   try {
     let meme = await Meme.findById(id);
     let comments = await Comment.find({

@@ -42,12 +42,18 @@ export const login = async (req, res) => {
     const user = await User.findOne({ email: email });
     const match = await bycypt.compare(password, user.password);
     if (match && user) {
+      const token = jwt.sign(
+        { id: user._id },
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: "24h" }
+      );
       res.send({
         success: true,
         user: {
-          _id: user.id,
           avatar: user.avatar,
           username: user.username,
+          token,
+          _id: user.id,
         },
       });
     } else {
@@ -148,7 +154,6 @@ export const resetPassword = async (req, res) => {
 
 export const updateAvatar = async (req, res) => {
   const { id, url } = req.body;
-  console.log(req.body);
   try {
     await User.updateOne({ _id: id }, { $set: { avatar: url } });
     const user = await User.findById(id);

@@ -3,6 +3,7 @@ import user from "./user.js";
 import meme from "./meme.js";
 import comment from "./comment.js";
 import like from "./like.js";
+import { checkJWT } from "../middlewares/checkJWT.js";
 const routes = Router();
 
 routes.get("/", (req, res) => {
